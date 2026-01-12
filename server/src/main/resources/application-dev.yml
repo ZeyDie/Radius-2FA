@@ -1,0 +1,12 @@
+app:
+  version: ${APP_VERSION}-dev
+
+spring:
+  jpa:
+    show-sql: ${DB_SHOW_SQL}
+
+logging:
+  level:
+    com.zeydie: DEBUG
+    org.hibernate: DEBUG
+    org.springframework: DEBUG

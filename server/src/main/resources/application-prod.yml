@@ -1,0 +1,6 @@
+app:
+  version: ${APP_VERSION}-release
+
+logging:
+  level:
+    com.zeydie: ${LOG_LEVEL:INFO}

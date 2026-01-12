@@ -1,0 +1,3 @@
+rootProject.name = 'Radius-2FA'
+
+include 'server'

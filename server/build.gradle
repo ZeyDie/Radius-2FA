@@ -1,0 +1,28 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jpa
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "${boot}"
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-ldap
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-ldap', version: "${boot}"
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: "${boot}"
+
+    // https://mvnrepository.com/artifact/org.springframework.ldap/spring-ldap-core
+    implementation group: 'org.springframework.ldap', name: 'spring-ldap-core', version: "3.3.5"
+    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-ldap
+    implementation group: 'org.springframework.data', name: 'spring-data-ldap', version: "${boot}"
+
+    // https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api
+    implementation group: 'jakarta.mail', name: 'jakarta.mail-api', version: "2.1.+"
+
+    // https://mvnrepository.com/artifact/commons-net/commons-net
+    implementation group: 'commons-net', name: 'commons-net', version: "3.12.+"
+
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    implementation group: 'com.h2database', name: 'h2', version: "2.4.+"
+}

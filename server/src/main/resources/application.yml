@@ -1,0 +1,65 @@
+spring:
+  profiles:
+    active: ${PROFILE}
+  config:
+    import: optional:file:.env[.properties]
+
+  application:
+    name: ${APP_NAME}
+
+  datasource:
+    url: ${JDBC_URL}
+    username: ${JDBC_USERNAME}
+    password: ${JDBC_PASSWORD}
+    driver-class-name: ${JDBC_DRIVER}
+  jpa:
+    hibernate:
+      ddl-auto: ${DB_DDL_AUTO}
+    properties:
+      hibernate.dialect: ${DB_DIALECT}
+    generate-ddl: true
+  ldap:
+    urls: ${LDAP_URL}
+    base: ${LDAP_BASE}
+    username: ${LDAP_USERNAME}
+    password: ${LDAP_PASSWORD}
+  mail:
+    default-encoding: UTF-8
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail.smtp.auth: ${MAIL_SMTP_AUTH}
+      mail.smtp.starttls.enable: ${MAIL_SMTP_STARTTLS_ENABLE}
+  h2:
+    console:
+      enabled: true
+      settings:
+        trace: true
+        web-allow-others: true
+        web-admin-password: ${H2_ADMIN_PASSWORD}
+
+server:
+  port: ${PORT:8080}
+
+app:
+  version: ${APP_VERSION}
+  cors:
+    enabled: ${CORS_ENABLED:false}
+    allowed:
+      credentials: ${CORS_ALLOWED_CREDENTIALS:false}
+      origins: ${CORS_ALLOWED_ORIGINS:null}
+      headers: ${CORS_ALLOWED_HEADERS:null}
+      methods: ${CORS_ALLOWED_METHODS:null}
+  totp:
+    issuer: ${TOTP_ISSUER}
+  radius:
+    secret: ${RADIUS_SECRET}
+    group: ${RADIUS_GROUP}
+    nas-identifiers: ${RADIUS_NAS_IDENTIFIERS}
+    nas-ips: ${RADIUS_NAS_IPS}
+    nas-login: ${RADIUS_NAS_LOGIN}
+  mail:
+    template:
+      qr-code: templates/email/qr-code.html
