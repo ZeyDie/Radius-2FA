@@ -47,7 +47,7 @@ subprojects {
     apply plugin: 'java'
 
     group = 'com.zeydie.radius2fa'
-    version = '1.0-SNAPSHOT'
+    version = '1.1-release'
 
     dependencies {
         // https://mvnrepository.com/artifact/org.projectlombok/lombok
@@ -62,14 +62,11 @@ subprojects {
         annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: "${mapstruct}"
         implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: "0.2.+"
 
-        // https://github.com/yscheah/TinyRadius
-        implementation group: 'org.tinyradius', name: 'tinyradius', version: "1.1.4-SNAPSHOT"
-
-        // https://github.com/samdjstevens/java-totp
-        implementation group: 'dev.samstevens.totp', name: 'totp-spring-boot-starter', version: "1.7.+"
-
-        // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
+        // https://mvnrepository.com/artifact/com.google.guava/guava
         implementation group: 'com.google.guava', name: 'guava', version: "${guava}"
+
+        // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
+        implementation group: 'org.apache.commons', name: 'commons-compress', version: "${commons_compress}"
 
         // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "${boot}"

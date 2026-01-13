@@ -1,6 +1,6 @@
 package com.zeydie.radius2fa.app;
 
-import com.zeydie.radius2fa.radius.AbstractRadiusServer;
+import com.zeydie.radius2fa.services.radius.AbstractRadiusServer;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.boot.SpringApplication;

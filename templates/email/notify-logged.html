@@ -287,6 +287,12 @@
             margin-left: 22px;
         }
 
+        .connection-success {
+            color: GREEN;
+            text-align: center;
+            font-size: 30px;
+        }
+
         .store-icon {
             width: 16px;
             height: 16px;
@@ -344,39 +350,12 @@
 <div class="email-container">
     <div class="header">
         <h1>🔐 Уведомление системы безопасности</h1>
-        <p>Осуществляется попытка входа удаленного доступа через Вашу учетную запись</p>
     </div>
 
     <div class="content">
         <div class="section">
             <div class="connection-info">
-                <div class="info-grid">
-                    <!-- Корректность пароля -->
-                    <div class="info-item">
-                        <div class="info-icon">🔑 Корректность пароля</div>
-                        <div class="info-value">%password-correctly%</div>
-                    </div>
-                    <br>
-                    <!-- Страна, геолокация -->
-                    <div class="info-item">
-                        <div class="info-icon">🌍 Страна и геолокация</div>
-                        <div class="info-value">%location-flag%, %location-country%, %location-city%,
-                            %location-latitude% %location-longitude%
-                        </div>
-                    </div>
-                    <br>
-                    <!-- IP адрес -->
-                    <div class="info-item">
-                        <div class="info-icon">📍 IP-адрес</div>
-                        <div class="info-value">%ip%</div>
-                    </div>
-                    <br>
-                    <!-- Дата и время подключения -->
-                    <div class="info-item">
-                        <div class="info-icon">🕒 Дата и время подключения</div>
-                        <div class="info-value">%date%</div>
-                    </div>
-                </div>
+                <div class="connection-success">Успешная авторизации</div>
             </div>
         </div>
     </div>

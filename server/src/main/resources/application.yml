@@ -4,9 +4,6 @@ spring:
   config:
     import: optional:file:.env[.properties]
 
-  application:
-    name: ${APP_NAME}
-
   datasource:
     url: ${JDBC_URL}
     username: ${JDBC_USERNAME}
@@ -44,6 +41,7 @@ server:
   port: ${PORT:8080}
 
 app:
+  name: ${APP_NAME}
   version: ${APP_VERSION}
   cors:
     enabled: ${CORS_ENABLED:false}
@@ -54,6 +52,11 @@ app:
       methods: ${CORS_ALLOWED_METHODS:null}
   totp:
     issuer: ${TOTP_ISSUER}
+    digits: ${TOTP_DIGITS:8}
+    ntp: ${TOTP_NTP}
+    time:
+      discrepancy: ${TOTP_TIME_DISCREPANCY:0}
+      period: ${TOTP_TIME_PERIOD:0}
   radius:
     secret: ${RADIUS_SECRET}
     group: ${RADIUS_GROUP}
@@ -63,3 +66,12 @@ app:
   mail:
     template:
       qr-code: templates/email/qr-code.html
+      notify-login: templates/email/notify-login.html
+      notify-logged: templates/email/notify-logged.html
+  geoip:
+    database:
+      path: ${GEOIP_DATABASE_PATH:/databases/GeoLite2-City.mmdb}
+      url: ${GEOIP_DATABASE_URL:https://cdn.jsdelivr.net/npm/geolite2-city/GeoLite2-City.mmdb.gz}
+      update:
+        enabled: ${GEOIP_DATABASE_UPDATE_ENABLED:true}
+        cron: ${GEOIP_DATABASE_UPDATE_CRON:0 0 2 * * *}

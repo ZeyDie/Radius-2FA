@@ -17,11 +17,23 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.data/spring-data-ldap
     implementation group: 'org.springframework.data', name: 'spring-data-ldap', version: "${boot}"
 
+    // https://github.com/yscheah/TinyRadius
+    implementation group: 'org.tinyradius', name: 'tinyradius', version: "1.1.4-SNAPSHOT"
+
+    // https://github.com/samdjstevens/java-totp
+    implementation group: 'dev.samstevens.totp', name: 'totp-spring-boot-starter', version: "1.7.+"
+
     // https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api
     implementation group: 'jakarta.mail', name: 'jakarta.mail-api', version: "2.1.+"
 
     // https://mvnrepository.com/artifact/commons-net/commons-net
     implementation group: 'commons-net', name: 'commons-net', version: "3.12.+"
+
+    // https://mvnrepository.com/artifact/com.maxmind.geoip2/geoip2
+    implementation group: 'com.maxmind.geoip2', name: 'geoip2', version: "5.0.+"
+
+    // https://mvnrepository.com/artifact/com.vdurmont/emoji-java
+    implementation group: 'com.vdurmont', name: 'emoji-java', version: "5.1.+"
 
     // https://mvnrepository.com/artifact/com.h2database/h2
     implementation group: 'com.h2database', name: 'h2', version: "2.4.+"

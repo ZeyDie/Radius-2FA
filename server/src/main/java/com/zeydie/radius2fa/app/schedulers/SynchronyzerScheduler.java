@@ -1,12 +1,12 @@
 package com.zeydie.radius2fa.app.schedulers;
 
 import com.google.common.collect.Lists;
-import com.zeydie.radius2fa.ldap.config.LdapConfig;
-import com.zeydie.radius2fa.ldap.data.entities.mapper.UserLdapMapper;
-import com.zeydie.radius2fa.ldap.service.LdapService;
-import com.zeydie.radius2fa.totp.entity.UserSecretEntity;
-import com.zeydie.radius2fa.totp.service.SecretService;
-import com.zeydie.radius2fa.totp.service.UserSecretService;
+import com.zeydie.radius2fa.services.ldap.config.LdapConfig;
+import com.zeydie.radius2fa.services.ldap.data.entities.mapper.UserLdapMapper;
+import com.zeydie.radius2fa.services.ldap.service.LdapService;
+import com.zeydie.radius2fa.services.totp.entity.UserSecretEntity;
+import com.zeydie.radius2fa.services.totp.service.SecretService;
+import com.zeydie.radius2fa.services.totp.service.UserSecretService;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +43,8 @@ public class SynchronyzerScheduler {
         @NonNull val usersWithVPNGroup = this.ldapService.getUsersWithVPNGroup();
 
         if (!this.cachedUsersWithVPNGroup.equals(usersWithVPNGroup)) {
+            this.log.debug("Users with VPN group changed");
+
             @NonNull val deletedUsers = this.cachedUsersWithVPNGroup.stream()
                     .filter(
                             user -> usersWithVPNGroup.stream()
