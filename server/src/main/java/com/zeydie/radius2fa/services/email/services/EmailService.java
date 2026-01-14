@@ -58,7 +58,10 @@ public class EmailService {
     }
 
     public void sendQrCodeToEmail(@NonNull final String email, final byte[] data) {
-        @NonNull var template = this.qrCodeTemplate;
+        @Nullable var template = this.qrCodeTemplate;
+
+        if (template == null)
+            throw new RuntimeException("Template not found");
 
         template = template.replaceAll("%qr-code-data%", Base64.getEncoder().encodeToString(data));
 
@@ -79,7 +82,10 @@ public class EmailService {
             return;
         }
 
-        @NonNull var template = this.notifyLoginTemplate;
+        @Nullable var template = this.notifyLoginTemplate;
+
+        if (template == null)
+            throw new RuntimeException("Template not found");
 
         template = template.replaceAll("%password-correctly%", passwordIsCorrectly ? "Пароль введен верный" : "Пароль введен неверный");
 
@@ -105,7 +111,7 @@ public class EmailService {
 
         template = template.replaceAll("%ip%", inetAddress.getHostAddress());
 
-        template = template.replaceAll("%date%", new SimpleDateFormat("dd-MM-yy HH:mm:ss").format(Date.from(Instant.now())));
+        template = template.replaceAll("%date%", new SimpleDateFormat("dd.MM.yy HH:mm:ss").format(Date.from(Instant.now())));
 
         this.log.info("Send notify login to email {}", email);
 
@@ -124,12 +130,17 @@ public class EmailService {
             return;
         }
 
+        @Nullable val template = this.notifyLoggedTemplate;
+
+        if (template == null)
+            throw new RuntimeException("Template not found");
+
         this.log.info("Send notify logged to email {}", email);
 
         this.defaultEmailService.sendEmail(
                 email,
                 "Уведомление о входе",
-                this.notifyLoggedTemplate
+                template
         );
     }
 }

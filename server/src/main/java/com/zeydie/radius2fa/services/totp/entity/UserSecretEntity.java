@@ -29,6 +29,9 @@ public class UserSecretEntity {
     @Column(name = SECRET_TOTP_ATTRIBUTE, nullable = true)
     private String secretTOTP;
 
+    @Column(name = "notified", nullable = false, columnDefinition = "boolean default false")
+    private boolean notified;
+
     @Override
     public boolean equals(final Object object) {
         if (object == null || getClass() != object.getClass()) return false;

@@ -1,6 +1,7 @@
 package com.zeydie.radius2fa.services.geoip.schedulers;
 
 import com.zeydie.radius2fa.services.geoip.config.GeoIPConfig;
+import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -23,10 +24,16 @@ import java.nio.file.Files;
 public class UpdaterScheduler {
     private final GeoIPConfig geoIPConfig;
 
+    @PostConstruct
+    private void init() {
+        if (!Files.exists(this.geoIPConfig.getDatabasePath()))
+            this.update();
+    }
+
     @SneakyThrows
     @Async
     @Scheduled(cron = "${app.geoip.database.update.cron}")
-    public void updater() {
+    public void update() {
         if (!this.geoIPConfig.isUpdateEnabled())
             return;
 

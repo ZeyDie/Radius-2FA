@@ -38,9 +38,8 @@ public class SecretService {
         try {
             val data = this.qrCodeService.generateQrCode(login, secret);
 
-            this.setSecretTOTP(id, secret);
-
             this.qrCodeEmailService.sendQrCodeToEmail(email, data);
+            this.setSecretTOTP(id, secret);
         } catch (final Exception exception) {
             exception.printStackTrace();
         }
@@ -63,11 +62,7 @@ public class SecretService {
     }
 
     public boolean verifyTOTPOfSecret(@Nullable final String secret, @NonNull final String code) {
-        val valid = this.codeVerifier.isValidCode(secret, code);
-
-        this.log.info("Verifying code {} {} with {}", valid, code, secret);
-
-        return valid;
+        return this.codeVerifier.isValidCode(secret, code);
     }
 
     public @Nullable String getSecretOfLogin(@NonNull final String login) {
