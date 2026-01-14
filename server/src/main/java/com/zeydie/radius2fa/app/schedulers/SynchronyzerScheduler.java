@@ -38,54 +38,58 @@ public class SynchronyzerScheduler {
     }
 
     @Async
-    @Scheduled(fixedRate = 1, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(cron = "${app.crons.sync}")
     public void sync() {
-        @NonNull val usersWithVPNGroup = this.ldapService.getUsersWithVPNGroup();
+        try {
+            @NonNull val usersWithVPNGroup = this.ldapService.getUsersWithVPNGroup();
 
-        if (!this.cachedUsersWithVPNGroup.equals(usersWithVPNGroup)) {
-            this.log.debug("Users with VPN group changed");
+            if (!this.cachedUsersWithVPNGroup.equals(usersWithVPNGroup)) {
+                this.log.debug("Users with VPN group changed");
 
-            this.cachedUsersWithVPNGroup.stream()
-                    .filter(
-                            user -> usersWithVPNGroup.stream()
-                                    .noneMatch(
-                                            userLdapEntity -> userLdapEntity.getId().equals(user.getId()) &&
-                                                    userLdapEntity.getLogin().equals(user.getLogin()) &&
-                                                    userLdapEntity.getEmail().equals(user.getEmail())
-                                    )
-                    )
-                    .forEach(
-                            user -> {
-                                try {
-                                    this.secretService.removeSecretTOTP(user.getId());
-                                    this.cachedUsersWithVPNGroup.remove(user);
-                                    this.log.info("Deleted user: {}", user);
-                                } catch (final Exception e) {
-                                    e.printStackTrace();
+                this.cachedUsersWithVPNGroup.stream()
+                        .filter(
+                                user -> usersWithVPNGroup.stream()
+                                        .noneMatch(
+                                                userLdapEntity -> userLdapEntity.getId().equals(user.getId()) &&
+                                                        userLdapEntity.getLogin().equals(user.getLogin()) &&
+                                                        userLdapEntity.getEmail().equals(user.getEmail())
+                                        )
+                        )
+                        .forEach(
+                                user -> {
+                                    try {
+                                        this.secretService.removeSecretTOTP(user.getId());
+                                        this.cachedUsersWithVPNGroup.remove(user);
+                                        this.log.info("Deleted user: {}", user);
+                                    } catch (final Exception exception) {
+                                        this.log.error(exception.getMessage(), exception);
+                                    }
                                 }
-                            }
-                    );
+                        );
 
-            usersWithVPNGroup.stream()
-                    .map(userLdapEntity -> UserLdapMapper.INSTANCE.toUserSecretEntity(userLdapEntity))
-                    .filter(user -> !this.cachedUsersWithVPNGroup.contains(user))
-                    .forEach(
-                            userSecretEntity -> {
-                                this.userSecretService.save(userSecretEntity);
-                                this.cachedUsersWithVPNGroup.add(userSecretEntity);
-                                this.log.info("New user: {}", userSecretEntity);
-                            }
-                    );
-        }
+                usersWithVPNGroup.stream()
+                        .map(userLdapEntity -> UserLdapMapper.INSTANCE.toUserSecretEntity(userLdapEntity))
+                        .filter(user -> !this.cachedUsersWithVPNGroup.contains(user))
+                        .forEach(
+                                userSecretEntity -> {
+                                    this.userSecretService.save(userSecretEntity);
+                                    this.cachedUsersWithVPNGroup.add(userSecretEntity);
+                                    this.log.info("New user: {}", userSecretEntity);
+                                }
+                        );
+            }
 
-        @NonNull val usersWithoutSecretTOTP = this.cachedUsersWithVPNGroup.stream()
-                .filter(user -> !this.secretService.hasSecretTOTP(user.getId()))
-                .toList();
+            @NonNull val usersWithoutSecretTOTP = this.cachedUsersWithVPNGroup.stream()
+                    .filter(user -> !this.secretService.hasSecretTOTP(user.getId()))
+                    .toList();
 
-        if (!usersWithoutSecretTOTP.isEmpty()) {
-            usersWithoutSecretTOTP.forEach(user -> this.secretService.generateTOTPWithQrCode(user.getId(), user.getLogin(), user.getEmail()));
+            if (!usersWithoutSecretTOTP.isEmpty()) {
+                usersWithoutSecretTOTP.forEach(user -> this.secretService.generateTOTPWithQrCode(user.getId(), user.getLogin(), user.getEmail()));
 
-            this.updateCachedUsers();
+                this.updateCachedUsers();
+            }
+        } catch (final Exception exception) {
+            this.log.error(exception.getMessage(), exception);
         }
     }
 

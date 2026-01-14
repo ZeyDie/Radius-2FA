@@ -41,7 +41,7 @@ public class SecretService {
             this.qrCodeEmailService.sendQrCodeToEmail(email, data);
             this.setSecretTOTP(id, secret);
         } catch (final Exception exception) {
-            exception.printStackTrace();
+            this.log.error(exception.getMessage(), exception);
         }
 
         return secret;

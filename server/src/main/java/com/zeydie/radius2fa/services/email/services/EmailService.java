@@ -42,8 +42,8 @@ public class EmailService {
             this.qrCodeTemplate = String.join("\n", Files.readAllLines(Paths.get(this.emailConfig.getQrCodeTemplate())));
             this.notifyLoginTemplate = String.join("\n", Files.readAllLines(Paths.get(this.emailConfig.getNotifyLoginTemplate())));
             this.notifyLoggedTemplate = String.join("\n", Files.readAllLines(Paths.get(this.emailConfig.getNotifyLoggedTemplate())));
-        } catch (final IOException e) {
-            e.printStackTrace();
+        } catch (final IOException exception) {
+            this.log.error(exception.getMessage(), exception);
         }
     }
 
@@ -105,8 +105,8 @@ public class EmailService {
                 template = template.replaceAll("%location-longitude%", String.valueOf(location.getLongitude()));
             } else
                 template = template.replaceAll("%location-flag%, %location-country%, %location-city%, %location-latitude% %location-longitude%", "Не удалось определить геолокацию");
-        } catch (final Exception e) {
-            e.printStackTrace();
+        } catch (final Exception exception) {
+            this.log.error(exception.getMessage(), exception);
         }
 
         template = template.replaceAll("%ip%", inetAddress.getHostAddress());

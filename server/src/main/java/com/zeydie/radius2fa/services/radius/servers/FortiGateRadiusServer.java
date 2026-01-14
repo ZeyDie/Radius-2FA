@@ -104,9 +104,9 @@ public class FortiGateRadiusServer extends AbstractRadiusServer {
                 return packet;
             }
         } catch (final Exception exception) {
-            exception.printStackTrace();
-        } catch (Throwable e) {
-            e.printStackTrace();
+            this.log.error(exception.getMessage(), exception);
+        } catch (final Throwable exception) {
+            this.log.error(exception.getMessage(), exception);
         }
 
         return this.createRejectResponse(accessRequest, "Invalid username or password");

@@ -41,15 +41,8 @@ server:
   port: ${PORT:8080}
 
 app:
-  name: ${APP_NAME}
-  version: ${APP_VERSION}
-  cors:
-    enabled: ${CORS_ENABLED:false}
-    allowed:
-      credentials: ${CORS_ALLOWED_CREDENTIALS:false}
-      origins: ${CORS_ALLOWED_ORIGINS:null}
-      headers: ${CORS_ALLOWED_HEADERS:null}
-      methods: ${CORS_ALLOWED_METHODS:null}
+  crons:
+    sync: ${APP_CRONS_SYNC:*/1 * * * * *}
   totp:
     issuer: ${TOTP_ISSUER}
     digits: ${TOTP_DIGITS:8}
@@ -60,9 +53,6 @@ app:
   radius:
     secret: ${RADIUS_SECRET}
     group: ${RADIUS_GROUP}
-    nas-identifiers: ${RADIUS_NAS_IDENTIFIERS}
-    nas-ips: ${RADIUS_NAS_IPS}
-    nas-login: ${RADIUS_NAS_LOGIN}
   mail:
     template:
       qr-code: templates/email/qr-code.html
@@ -74,4 +64,4 @@ app:
       url: ${GEOIP_DATABASE_URL:https://cdn.jsdelivr.net/npm/geolite2-city/GeoLite2-City.mmdb.gz}
       update:
         enabled: ${GEOIP_DATABASE_UPDATE_ENABLED:true}
-        cron: ${GEOIP_DATABASE_UPDATE_CRON:0 0 2 * * *}
+        cron: ${GEOIP_DATABASE_UPDATE_CRON:0 2 * * * *}
